@@ -946,7 +946,7 @@ static PyObject *S4Sim_SetExcitationExterior(S4Sim *self, PyObject *args, PyObje
 		return NULL;
 	}
 
-	err = Simulation_MakeExcitationExterior(self->S, exciData.n, exciData.exg, exciData.ex);
+	err = Simulation_ExcitationExterior(self->S, exciData.n, exciData.exg, exciData.ex);
 	free(exciData.exg); exciData.exg = NULL;
 	free(exciData.ex); exciData.ex = NULL;
 	if(0 != err)
@@ -972,7 +972,7 @@ static PyObject *S4Sim_SetExcitationPlanewave(S4Sim *self, PyObject *args, PyObj
 	pol_p[0] = sqrt(cp.real*cp.real + cp.imag*cp.imag); pol_p[1] = atan2(cp.imag,cp.real);
 	angle[0] *= (M_PI/180.);
 	angle[1] *= (M_PI/180.);
-	ret = Simulation_MakeExcitationPlanewave(self->S, angle, pol_s, pol_p, order);
+	ret = Simulation_ExcitationPlanewave(self->S, angle, pol_s, pol_p, order);
 	if(0 != ret){
 		HandleSolutionErrorCode("SetExcitationPlanewave", ret);
 		return NULL;

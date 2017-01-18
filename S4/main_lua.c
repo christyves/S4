@@ -1975,7 +1975,7 @@ static int S4L_Simulation_SetExcitationPlanewave(lua_State *L){
 
 	order = luaL_optinteger(L, 5, 0);
 	if(order > 0){ order--; }
-	ret = Simulation_MakeExcitationPlanewave(S, angle, pol_s, pol_p, order);
+	ret = Simulation_ExcitationPlanewave(S, angle, pol_s, pol_p, order);
 	if(0 != ret){
 		HandleSolutionErrorCode(L, "SetExcitationPlanewave", ret);
 		return 0;

@@ -3113,8 +3113,8 @@ int Simulation_GetLayerZIntegral(S4_Simulation *S, S4_Layer *layer, const double
 	return 0;
 }
 
-int Simulation_MakeExcitationPlanewave(S4_Simulation *S, const double angle[2], const double pol_s[2], const double pol_p[2], size_t order){
-	S4_TRACE("> Simulation_MakeExcitationPlanewave(S=%p, angle=%p (%f,%f), pol_s=%p (%f,%f), pol_p=%p (%f,%f))\n", S,
+int Simulation_ExcitationPlanewave(S4_Simulation *S, const double angle[2], const double pol_s[2], const double pol_p[2], size_t order){
+	S4_TRACE("> Simulation_ExcitationPlanewave(S=%p, angle=%p (%f,%f), pol_s=%p (%f,%f), pol_p=%p (%f,%f))\n", S,
 		angle, (NULL != angle) ? angle[0] : 0, (NULL != angle) ? angle[1] : 0,
 		pol_s, (NULL != pol_s) ? pol_s[0] : 0, (NULL != pol_s) ? pol_s[1] : 0,
 		pol_p, (NULL != pol_p) ? pol_p[0] : 0, (NULL != pol_p) ? pol_p[1] : 0);
@@ -3124,12 +3124,12 @@ int Simulation_MakeExcitationPlanewave(S4_Simulation *S, const double angle[2], 
 	if(NULL == pol_s){ ret = -3; }
 	if(NULL == pol_p){ ret = -4; }
 	if(0 != ret){
-		S4_TRACE("< Simulation_MakeExcitationPlanewave (failed; ret = %d)\n", ret);
+		S4_TRACE("< Simulation_ExcitationPlanewave (failed; ret = %d)\n", ret);
 		return ret;
 	}
 
 	if(NULL == S->layer){
-		S4_TRACE("< Simulation_MakeExcitationPlanewave (failed; no layers)\n");
+		S4_TRACE("< Simulation_ExcitationPlanewave (failed; no layers)\n");
 		return 14;
 	}
 
@@ -3138,7 +3138,7 @@ int Simulation_MakeExcitationPlanewave(S4_Simulation *S, const double angle[2], 
 
 	const S4_Material *M = &S->material[S->layer[0].material];
 	if(NULL == M){
-		S4_TRACE("< Simulation_MakeExcitationPlanewave (failed; material %d not defined)\n", S->layer[0].material);
+		S4_TRACE("< Simulation_ExcitationPlanewave (failed; material %d not defined)\n", S->layer[0].material);
 		return 15;
 	}
 	std::complex<double> layer_eps;
@@ -3188,12 +3188,12 @@ int Simulation_MakeExcitationPlanewave(S4_Simulation *S, const double angle[2], 
 	std::cout << "hy: " << S->exc.sub.planewave.hy[0] << "\t" << S->exc.sub.planewave.hy[1] << std::endl;
 	//*/
 
-	S4_TRACE("< Simulation_MakeExcitationPlanewave\n");
+	S4_TRACE("< Simulation_ExcitationPlanewave\n");
 	return 0;
 }
 
 int S4_Simulation_ExcitationDipole(S4_Simulation *S, const double k[2], const char *layer, const double pos[2], const double moment[6]){
-	S4_TRACE("> Simulation_MakeExcitationDipole(S=%p, k=%p (%f,%f), moment=%p (%f,%f,%f,%f,%f,%f))\n", S,
+	S4_TRACE("> Simulation_ExcitationDipole(S=%p, k=%p (%f,%f), moment=%p (%f,%f,%f,%f,%f,%f))\n", S,
 		pos, (NULL != pos) ? pos[0] : 0, (NULL != pos) ? pos[1] : 0,
 		moment, (NULL != moment) ? moment[0] : 0, (NULL != moment) ? moment[1] : 0, (NULL != moment) ? moment[2] : 0,
 		(NULL != moment) ? moment[3] : 0, (NULL != moment) ? moment[4] : 0, (NULL != moment) ? moment[5] : 0);
@@ -3202,12 +3202,12 @@ int S4_Simulation_ExcitationDipole(S4_Simulation *S, const double k[2], const ch
 	if(NULL == pos){ ret = -2; }
 	if(NULL == moment){ ret = -3; }
 	if(0 != ret){
-		S4_TRACE("< Simulation_MakeExcitationDipole (failed; ret = %d)\n", ret);
+		S4_TRACE("< Simulation_ExcitationDipole (failed; ret = %d)\n", ret);
 		return ret;
 	}
 
 	if(NULL == S->layer){
-		S4_TRACE("< Simulation_MakeExcitationDipole (failed; no layers)\n");
+		S4_TRACE("< Simulation_ExcitationDipole (failed; no layers)\n");
 		return 14;
 	}
 
@@ -3223,12 +3223,12 @@ int S4_Simulation_ExcitationDipole(S4_Simulation *S, const double k[2], const ch
 	}
 	S->exc.layer = Simulation_GetLayerByName(S, layer, NULL);
 
-	S4_TRACE("< Simulation_MakeExcitationDipole\n");
+	S4_TRACE("< Simulation_ExcitationDipole\n");
 	return 0;
 }
 
 int S4_Simulation_ExcitationExterior(S4_Simulation *S, int n, const int *exg, const double *ex){
-	S4_TRACE("> Simulation_MakeExcitationExterior(S=%p, n=%d, exg=%p, ex=%p)\n", S,
+	S4_TRACE("> Simulation_ExcitationExterior(S=%p, n=%d, exg=%p, ex=%p)\n", S,
 		n, exg, ex);
 	int ret = 0;
 	if(NULL == S){ ret = -1; }
@@ -3236,7 +3236,7 @@ int S4_Simulation_ExcitationExterior(S4_Simulation *S, int n, const int *exg, co
 	if(NULL == exg){ ret = -3; }
 	if(NULL == ex){ ret = -4; }
 	if(0 != ret){
-		S4_TRACE("< Simulation_MakeExcitationExterior (failed; ret = %d)\n", ret);
+		S4_TRACE("< Simulation_ExcitationExterior (failed; ret = %d)\n", ret);
 		return ret;
 	}
 
@@ -3251,7 +3251,7 @@ int S4_Simulation_ExcitationExterior(S4_Simulation *S, int n, const int *exg, co
 	ext->coeff = (double*)malloc(sizeof(double) * 2*n);
 	memcpy(ext->coeff, ex, sizeof(double) * 2*n);
 
-	S4_TRACE("< Simulation_MakeExcitationExterior\n");
+	S4_TRACE("< Simulation_ExcitationExterior\n");
 	return 0;
 }
 
